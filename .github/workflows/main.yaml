@@ -21,7 +21,7 @@ jobs:
 
     - name: Process logs after failure
       run: |
-        if [[ $(cat exit_code.txt) -ne 0 ]]; then
+        if: failure()
           echo "Analyzing logs due to failure..."
           python process_log.py logs.txt
         fi
