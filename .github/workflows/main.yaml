@@ -18,10 +18,18 @@ jobs:
       run: |
         echo "Running tests..." | tee logs.txt
         python main.py 2>&1 | tee -a logs.txt
-      # continue-on-error: true  # Continue workflow even if the step fails
+        echo $? > exit_code.txt  # Capture exit code
 
     - name: Process logs after failure
-      if: failure()  # Only runs if the previous steps failed
       run: |
-        echo "Analyzing logs due to failure..."
-        python process_log.py logs.txt
+        if [[ $(cat exit_code.txt) -ne 0 ]]; then
+          echo "Analyzing logs due to failure..."
+          python process_log.py logs.txt
+        fi
+
+    - name: Upload logs
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: logs
+        path: logs.txt
