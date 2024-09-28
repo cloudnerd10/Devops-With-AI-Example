@@ -21,25 +21,22 @@ jobs:
           exit 1
         id: run-tests
 
-      # Capture logs from the GitHub Actions runner output and save to a file
-      - name: Capture entire job logs
+      # Capture logs from the test step and save to a file
+      - name: Capture logs and save to a file
         if: failure()
         run: |
           echo "Saving logs..."
-          
-          # GitHub captures step output and stores them in a temporary log file
+
           LOG_FILE=$GITHUB_WORKSPACE/logs.txt
-          
-          # Add a header to the log file
-          echo "Captured Logs:" > $LOG_FILE
-          
-          # Output the logs of all previous steps to the log file
+
+          # Capture logs from each previous step, particularly the 'run-tests' step
           echo "------------------- Step: run-tests -------------------" >> $LOG_FILE
-          cat $GITHUB_STEP_SUMMARY >> $LOG_FILE
-          
-          # Add the full runner logs (debug output) to the file
-          echo "------------------- Runner Logs -------------------" >> $LOG_FILE
-          cat /home/runner/work/_temp/_runner_file_commands/*.log >> $LOG_FILE || echo "No runner logs found." >> $LOG_FILE
+          echo "Output from run-tests step:" >> $LOG_FILE
+          cat $GITHUB_WORKSPACE/_temp/logs.txt >> $LOG_FILE || echo "No logs captured from tests."
+
+          # You can also capture the job's debug logs, if any
+          echo "------------------- Environment and Debug Info -------------------" >> $LOG_FILE
+          env >> $LOG_FILE
 
       # Send logs to Python script for analysis
       - name: Analyze logs using Python script
