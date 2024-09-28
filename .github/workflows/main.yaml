@@ -6,6 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      GOOGLE_API_KEY: "AIzaSyA0jm_RIEoh-G2wncDR8e7v5r84pDSGdUU"
+
     steps:
     - name: Set up job
       run: echo "Setting up..."
