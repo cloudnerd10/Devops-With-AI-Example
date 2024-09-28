@@ -1,7 +1,6 @@
 name: Python CI with Log Processing
 
-on:
-  workflow_dispatch:
+on: [push, pull_request]
 
 jobs:
   build:
@@ -17,7 +16,7 @@ jobs:
     - name: Run tests and capture logs
       run: |
         echo "Running tests..." | tee logs.txt
-        python main.py 2>&1 | tee -a logs.txt
+        python main.py >> logs.txt 2>&1  # Redirect both stdout and stderr to logs.txt
         echo $? > exit_code.txt  # Capture exit code
 
     - name: Process logs after failure
@@ -26,3 +25,7 @@ jobs:
           echo "Analyzing logs due to failure..."
           python process_log.py logs.txt
         fi
+
+    - name: Display logs for debugging
+      run: cat logs.txt
+      if: failure()  # Only display logs if previous steps failed
