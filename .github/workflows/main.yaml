@@ -34,7 +34,7 @@ jobs:
           echo "-------------------" >> $LOG_FILE
           
           # Use GitHub Actions command to read logs
-          cat $GITHUB_WORKSPACE/path-to-log-file >> $LOG_FILE || echo "No additional logs found."
+          cat $GITHUB_WORKSPACE/logs.txt >> $LOG_FILE || echo "No additional logs found."
           
           # Capture any environment or workflow-specific variables if necessary
           echo "Environment Variables:" >> $LOG_FILE
