@@ -20,8 +20,8 @@ jobs:
         echo $? > exit_code.txt  # Capture exit code
 
     - name: Process logs after failure
+      if: failure()
       run: |
-        if: failure()
           echo "Analyzing logs due to failure..."
           python process_log.py logs.txt
         fi
