@@ -24,7 +24,6 @@ jobs:
       run: |
           echo "Analyzing logs due to failure..."
           python process_log.py logs.txt
-        fi
 
     - name: Display logs for debugging
       run: cat logs.txt
