@@ -18,7 +18,7 @@ jobs:
       run: |
         echo "Running tests..." | tee logs.txt
         python main.py 2>&1 | tee -a logs.txt
-      continue-on-error: true  # Continue workflow even if the step fails
+      # continue-on-error: true  # Continue workflow even if the step fails
 
     - name: Process logs after failure
       if: failure()  # Only runs if the previous steps failed
