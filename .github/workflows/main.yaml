@@ -15,7 +15,7 @@ jobs:
 
       - name: Run tests
         run: |
-          # Your commands here
+          python main.py
         id: run-tests
 
       # If the tests fail, we capture the logs
