@@ -26,10 +26,3 @@ jobs:
           echo "Analyzing logs due to failure..."
           python process_log.py logs.txt
         fi
-
-    - name: Upload logs
-      if: failure()
-      uses: actions/upload-artifact@v2
-      with:
-        name: logs
-        path: logs.txt
