@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
+
+jobs:
+  analyze-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: |
+          # Your commands here
+        id: run-tests
+
+      # If the tests fail, we capture the logs
+      - name: Capture logs if failed
+        if: failure()
+        run: |
+          echo "Saving logs..."
+          # Saving logs to a file for further processing
+          echo "Captured logs:" > $GITHUB_WORKSPACE/logs.txt
+          cat $GITHUB_WORKSPACE/path-to-log-file >> $GITHUB_WORKSPACE/logs.txt
+
+      # Send logs to Python script
+      - name: Send logs to Python script
+        if: failure()
+        run: |
+          python process_logs.py "$GITHUB_WORKSPACE/logs.txt"
