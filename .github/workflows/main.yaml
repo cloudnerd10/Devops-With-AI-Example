@@ -23,7 +23,7 @@ jobs:
       if: failure()
       run: |
           echo "Analyzing logs due to failure..."
-          python process_log.py logs.txt
+          python process_logs.py logs.txt
 
     - name: Display logs for debugging
       run: cat logs.txt
