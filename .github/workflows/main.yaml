@@ -1,7 +1,7 @@
 name: Analyze Logs on Failure
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:  # Manual trigger
   workflow_run:
     workflows: ["Build"]
     types:
@@ -22,25 +22,26 @@ jobs:
         id: run-tests
 
       # Capture logs from the GitHub Actions runner output and save to a file
-      - name: Save logs on failure
+      - name: Capture entire job logs
         if: failure()
         run: |
           echo "Saving logs..."
-          # Capture workflow logs and save them to a file
+          
+          # GitHub captures step output and stores them in a temporary log file
           LOG_FILE=$GITHUB_WORKSPACE/logs.txt
           
+          # Add a header to the log file
           echo "Captured Logs:" > $LOG_FILE
-          echo "Step ID: run-tests" >> $LOG_FILE
-          echo "-------------------" >> $LOG_FILE
           
-          # Use GitHub Actions command to read logs
-          cat $GITHUB_WORKSPACE/logs.txt >> $LOG_FILE || echo "No additional logs found."
+          # Output the logs of all previous steps to the log file
+          echo "------------------- Step: run-tests -------------------" >> $LOG_FILE
+          cat $GITHUB_STEP_SUMMARY >> $LOG_FILE
           
-          # Capture any environment or workflow-specific variables if necessary
-          echo "Environment Variables:" >> $LOG_FILE
-          env >> $LOG_FILE
+          # Add the full runner logs (debug output) to the file
+          echo "------------------- Runner Logs -------------------" >> $LOG_FILE
+          cat /home/runner/work/_temp/_runner_file_commands/*.log >> $LOG_FILE || echo "No runner logs found." >> $LOG_FILE
 
-      # Send logs to Python script
+      # Send logs to Python script for analysis
       - name: Analyze logs using Python script
         if: failure()
         run: |
