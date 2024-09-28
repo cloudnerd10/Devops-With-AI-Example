@@ -15,6 +15,7 @@ jobs:
 
     - name: Run tests and capture logs
       run: |
+        pip install langchain-google-genai
         echo "Running tests..." | tee logs.txt
         python main.py >> logs.txt 2>&1  # Redirect both stdout and stderr to logs.txt
         echo $? > exit_code.txt  # Capture exit code
