@@ -26,7 +26,7 @@ jobs:
           echo "Saving logs..."
           # Saving logs to a file for further processing
           echo "Captured logs:" > $GITHUB_WORKSPACE/logs.txt
-          cat $GITHUB_WORKSPACE/path-to-log-file >> $GITHUB_WORKSPACE/logs.txt
+          cat $GITHUB_WORKSPACE/logs.txt >> $GITHUB_WORKSPACE/logs.txt
 
       # Send logs to Python script
       - name: Send logs to Python script
