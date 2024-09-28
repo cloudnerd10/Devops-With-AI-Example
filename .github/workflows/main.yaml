@@ -26,10 +26,10 @@ jobs:
           echo "Saving logs..."
           # Saving logs to a file for further processing
           echo "Captured logs:" > $GITHUB_WORKSPACE/logs.txt
-          cat $GITHUB_WORKSPACE/logs.txt >> $GITHUB_WORKSPACE/logs.txt
+          cat $GITHUB_WORKSPACE/logs.txt >> $GITHUB_WORKSPACE/final_logs.txt
 
       # Send logs to Python script
       - name: Send logs to Python script
         if: failure()
         run: |
-          python process_logs.py "$GITHUB_WORKSPACE/logs.txt"
+          python process_logs.py "$GITHUB_WORKSPACE/final_logs.txt"
