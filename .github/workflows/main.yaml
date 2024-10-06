@@ -1,6 +1,7 @@
 name: Python CI with Log Processing
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
