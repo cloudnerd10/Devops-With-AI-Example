@@ -12,9 +12,7 @@ def analyze_logs(log_file):
         print("Log Analysis: ")
         print(logs)
         llm = GoogleGenerativeAI(model="gemini-pro")
-        print(
-            llm.invoke(logs)
-        )
+        return llm.invoke(logs)
 
 def send_email(sender_email, sender_password, recipient_email, subject, body):
     try:
