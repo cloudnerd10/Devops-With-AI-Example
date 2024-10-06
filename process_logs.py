@@ -48,7 +48,7 @@ if __name__ == "__main__":
     log_file = sys.argv[1]
     body = analyze_logs(log_file)
     sender_email = "gcpofakhil@gmail.com"
-    sender_password = "mwlwxqkonowiturr"  # This needs to be an App Password, not your regular password
+    sender_password = os.environ['SENDER_PASSWORD']  # This needs to be an App Password, not your regular password
     recipient_email = "akhilreddy.ankireddy10@gmail.com"
     subject = "Test Email"
     send_email(sender_email, sender_password, recipient_email, subject, body)
