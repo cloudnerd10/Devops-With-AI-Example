@@ -26,9 +26,9 @@ jobs:
 
     - name: Process logs after failure
       if: failure()
-      echo "SENDER_PASSWORD=${{env.SENDER_PASSWORD}}" >> $GITHUB_ENV
       run: |
           echo "Analyzing logs due to failure..."
+          echo "SENDER_PASSWORD=${{env.SENDER_PASSWORD}}" >> $GITHUB_ENV
           python process_logs.py logs.txt
 
     - name: Display logs for debugging
