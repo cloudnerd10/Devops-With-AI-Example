@@ -10,7 +10,6 @@ def analyze_logs(log_file):
         logs = f.read()
         # Analyze the logs here
         print("Log Analysis: ")
-        print(logs)
         llm = GoogleGenerativeAI(model="gemini-pro")
         return llm.invoke(logs)
 
